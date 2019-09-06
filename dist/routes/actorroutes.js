@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var actorController_1 = require("./../controller/actorController");
+var actorControllerObj = new actorController_1.actorController();
+exports.ActorRoutes = express_1.Router();
+exports.ActorRoutes.get('/', actorControllerObj.getAllActor);
+exports.ActorRoutes.get('/getActorById/:id', actorControllerObj.getActorById);
+exports.ActorRoutes.put('/updateActorById/:id', actorControllerObj.updateActorById);
+exports.ActorRoutes.post('/createActor', actorControllerObj.createActor);

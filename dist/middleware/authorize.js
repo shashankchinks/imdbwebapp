@@ -1,6 +1,6 @@
+"use strict";
 // import * as express from "express";
 // import { userModel } from "./../models/bankModel";
-
 // export class AuthorizeService{
 //     public static async authorize(req:any, res:express.Response,next:any){       
 //         try {
@@ -13,11 +13,9 @@
 //                 var err = new Error('You are not authorized to perform this operation!');
 //                 return next(err);
 //             }
-           
 //         } catch (err) {
 //             console.log(err);
 //             return res.json(err);
 //         }
 //     }
-
 // }

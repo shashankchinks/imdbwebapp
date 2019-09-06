@@ -7,8 +7,8 @@ var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var db_1 = require("./startup/db");
 var routes_1 = require("./startup/routes");
-var imdbApp = /** @class */ (function () {
-    function imdbApp() {
+var ImdbApp = /** @class */ (function () {
+    function ImdbApp() {
         this.app = express_1.default();
         this.app.listen(4000, 'localhost', function () {
             console.log("Server has started on port 4000");
@@ -17,10 +17,10 @@ var imdbApp = /** @class */ (function () {
         routes_1.Routes.configRoutes(this.app);
         db_1.Db.connectMongoDb();
     }
-    imdbApp.prototype.configBodyParser = function () {
+    ImdbApp.prototype.configBodyParser = function () {
         this.app.use(body_parser_1.default.json());
         this.app.use(body_parser_1.default.urlencoded({ extended: false }));
     };
-    return imdbApp;
+    return ImdbApp;
 }());
-exports.userApp = new imdbApp();
+exports.imdbApp = new ImdbApp();

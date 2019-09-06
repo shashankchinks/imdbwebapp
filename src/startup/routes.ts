@@ -1,11 +1,9 @@
 import express from "express";
-import {userRoutes} from "./../routes/userRoutes";
-import {cardRoutes} from "./../routes/cardRoutes";
-import {bankRoutes} from "./../routes/bankRoutes";
-import {UserController} from "./../controllers/userController";
-import {AuthenticateService} from './../middleware/authenticate'
-import {AuthorizeService} from "./../middleware/authorize";
-let userControllerObj = new UserController();
+import {ActorRoutes} from "./../routes/actorroutes";
+import {MovieRoutes} from "./../routes/moviesroutes";
+import {ProducerRoutes} from "./../routes/producersroutes";
+// import {AuthenticateService} from './../middleware/authenticate'
+// import {AuthorizeService} from "./../middleware/authorize";
 export class Routes{
     constructor(){
 
@@ -16,14 +14,11 @@ export class Routes{
             res.status(200).json({"success":"Server is running"});
         });
 
-        app.post('/register', userControllerObj.createUser);
-        app.post('/login',userControllerObj.login);
-
-        app.use(AuthenticateService.authenticate); //all thosa url which we want to authenticate it will come below of line or vice-versa
+        //app.use(AuthenticateService.authenticate); //all thosa url which we want to authenticate it will come below of line or vice-versa
         
-        app.use('/user',userRoutes);
-        app.use('/card',cardRoutes,AuthorizeService.authorize);
-        app.use('/bank',bankRoutes,AuthorizeService.authorize);
+        app.use('/actor',ActorRoutes);
+        app.use('/movie',MovieRoutes);
+        app.use('/producer',ProducerRoutes);
         
     }
 }

@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import {Db} from "./startup/db";
 import {Routes} from "./startup/routes";
-class imdbApp{
+class ImdbApp{
     app:express.Application;
     constructor(){
         this.app = express();
@@ -20,4 +20,4 @@ class imdbApp{
     }
 }
 
-export const userApp = new imdbApp();
+export const imdbApp = new ImdbApp();

@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { BankController } from "./../controllers/bankController";
+import { actorController } from "./../controller/actorController";
 
-let bankControllerObj = new BankController();
+let actorControllerObj = new actorController();
 
-export const bankRoutes: Router = Router();
-bankRoutes.get('/',bankControllerObj.getAllBank);
-bankRoutes.get('/getBankById/:id',bankControllerObj.getBankById);
-bankRoutes.put('/updateBankById/:id',bankControllerObj.updateBankById);
-bankRoutes.post('/createBank',bankControllerObj.createBank);
+export const ActorRoutes: Router = Router();
+ActorRoutes.get('/',actorControllerObj.getAllActor);
+ActorRoutes.get('/getActorById/:id',actorControllerObj.getActorById);
+ActorRoutes.put('/updateActorById/:id',actorControllerObj.updateActorById);
+ActorRoutes.post('/createActor',actorControllerObj.createActor);

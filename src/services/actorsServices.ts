@@ -1,10 +1,10 @@
 import express from "express";
-import {bankModel} from "./../models/bankModel";
-export class BankService{
-    public static async getAllBank(req: express.Request, res: express.Response){
+import {actorModel} from "./../models/actorModel";
+export class ActorService{
+    public static async getAllActor(req: express.Request, res: express.Response){
         try{
-            let allBank = await bankModel.find().exec();
-            return allBank;
+            let allActor = await actorModel.find().exec();
+            return allActor;
         }
         catch(err){
             console.log(err);
@@ -12,10 +12,10 @@ export class BankService{
         }
     }
 
-    public static async getBankById(req: express.Request, res: express.Response){
+    public static async getActorById(req: express.Request, res: express.Response){
         try{
-            let getBank = await bankModel.findById(req.params.id).exec();
-            return getBank;
+            let getActor = await actorModel.findById(req.params.id).exec();
+            return getActor;
         }
         catch(err){
             console.log(err);
@@ -23,24 +23,24 @@ export class BankService{
         }
     }
 
-    public static async updateBankById(req:express.Request, res:express.Response){
+    public static async updateActorById(req:express.Request, res:express.Response){
         try {
-            let updateBankById:any = await bankModel.findById(req.params.id).exec();
-            updateBankById.name = req.body.name;
-            updateBankById.type = req.body.type;
-            await updateBankById.save();
-            return updateBankById;
+            let updateActorById:any = await actorModel.findById(req.params.id).exec();
+            updateActorById.name = req.body.name;
+            updateActorById.type = req.body.type;
+            await updateActorById.save();
+            return updateActorById;
         } catch (err) {
             console.log(err);
             return err;            
         }
     }
     
-    public static async createBank(req:express.Request, res:express.Response){
+    public static async createActor(req:express.Request, res:express.Response){
         try{
-            let createBank = new bankModel(req.body);
-            await createBank.save();
-            return createBank;
+            let createActor = new actorModel(req.body);
+            await createActor.save();
+            return createActor;
         }catch(err){
             console.log(err);
             return err;

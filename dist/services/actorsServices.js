@@ -90,7 +90,9 @@ var ActorService = /** @class */ (function () {
                     case 1:
                         updateActorById = _a.sent();
                         updateActorById.name = req.body.name;
-                        updateActorById.type = req.body.type;
+                        updateActorById.sex = req.body.sex;
+                        updateActorById.dob = req.body.dob;
+                        updateActorById.myMovie = req.body.myMovie;
                         return [4 /*yield*/, updateActorById.save()];
                     case 2:
                         _a.sent();

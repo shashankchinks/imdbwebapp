@@ -4,6 +4,7 @@ const producerSchema = new mongoose.Schema({
     sex: String,
     dob: String,
     bio: String,
+    movieProduced : [{type:mongoose.SchemaTypes.ObjectId, ref:"movie"}],
     createdDate: {type: Date, default:Date.now},
     completed: {type:Boolean, default:false}
 });

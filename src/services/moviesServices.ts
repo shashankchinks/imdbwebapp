@@ -3,7 +3,7 @@ import {movieModel} from "./../models/movieModel";
 export class MovieService{
     public static async getAllMovie(req: express.Request, res: express.Response){
         try{
-            let allMovie = await movieModel.find().exec();
+            let allMovie = await movieModel.find().populate('ActorList').populate('producedBy').exec();
             return allMovie;
         }
         catch(err){
@@ -14,7 +14,7 @@ export class MovieService{
 
     public static async getMovieById(req: express.Request, res: express.Response){
         try{
-            let getMovie = await movieModel.findById(req.params.id).exec();
+            let getMovie = await movieModel.findById(req.params.id).populate('ActorList').populate('producedBy').exec();
             return getMovie;
         }
         catch(err){

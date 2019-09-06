@@ -27,7 +27,9 @@ export class ActorService{
         try {
             let updateActorById:any = await actorModel.findById(req.params.id).exec();
             updateActorById.name = req.body.name;
-            updateActorById.type = req.body.type;
+            updateActorById.sex = req.body.sex;
+            updateActorById.dob = req.body.dob;
+            updateActorById.myMovie = req.body.myMovie;
             await updateActorById.save();
             return updateActorById;
         } catch (err) {

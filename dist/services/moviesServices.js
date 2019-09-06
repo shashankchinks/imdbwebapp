@@ -46,7 +46,7 @@ var MovieService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, movieModel_1.movieModel.find().exec()];
+                        return [4 /*yield*/, movieModel_1.movieModel.find().populate('ActorList').populate('producedBy').exec()];
                     case 1:
                         allMovie = _a.sent();
                         return [2 /*return*/, allMovie];
@@ -66,7 +66,7 @@ var MovieService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).exec()];
+                        return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).populate('ActorList').populate('producedBy').exec()];
                     case 1:
                         getMovie = _a.sent();
                         return [2 /*return*/, getMovie];

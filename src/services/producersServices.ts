@@ -27,7 +27,10 @@ export class ProducerService{
         try {
             let updateProducerById:any = await producerModel.findById(req.params.id).exec();
             updateProducerById.name = req.body.name;
-            updateProducerById.type = req.body.type;
+            updateProducerById.sex = req.body.sex;
+            updateProducerById.dob = req.body.dob;
+            updateProducerById.bio = req.body.bio;
+            updateProducerById.movieProduced = req.body.movieProduced;
             await updateProducerById.save();
             return updateProducerById;
         } catch (err) {

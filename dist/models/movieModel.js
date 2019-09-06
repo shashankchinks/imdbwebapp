@@ -9,6 +9,8 @@ var movieSchema = new mongoose_1.default.Schema({
     yearOfRelease: String,
     plot: String,
     poster: String,
+    producedBy: [{ type: mongoose_1.default.SchemaTypes.ObjectId, ref: "producer" }],
+    ActorList: [{ type: mongoose_1.default.SchemaTypes.ObjectId, ref: "actor" }],
     createdDate: { type: Date, default: Date.now },
     completed: { type: Boolean, default: false }
 });

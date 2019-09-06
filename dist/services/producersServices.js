@@ -90,7 +90,10 @@ var ProducerService = /** @class */ (function () {
                     case 1:
                         updateProducerById = _a.sent();
                         updateProducerById.name = req.body.name;
-                        updateProducerById.type = req.body.type;
+                        updateProducerById.sex = req.body.sex;
+                        updateProducerById.dob = req.body.dob;
+                        updateProducerById.bio = req.body.bio;
+                        updateProducerById.movieProduced = req.body.movieProduced;
                         return [4 /*yield*/, updateProducerById.save()];
                     case 2:
                         _a.sent();

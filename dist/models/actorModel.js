@@ -10,6 +10,7 @@ var actorSchema = new mongoose_1.default.Schema({
     sex: String,
     dob: String,
     bio: String,
+    myMovie: [{ type: mongoose_1.default.SchemaTypes.ObjectId, ref: "movie" }],
     createdDate: { type: Date, default: Date.now },
     completed: { type: Boolean, default: false }
 });

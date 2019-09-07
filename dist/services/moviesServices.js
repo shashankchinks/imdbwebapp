@@ -36,6 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var movieModel_1 = require("./../models/movieModel");
+var actorModel_1 = require("./../models/actorModel");
+var producerModel_1 = require("./../models/producerModel");
 var MovieService = /** @class */ (function () {
     function MovieService() {
     }
@@ -81,46 +83,60 @@ var MovieService = /** @class */ (function () {
     };
     MovieService.updateMovieById = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var updateMovieById, err_3;
+            var producerExist, createProducer, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).exec()];
+                        _a.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.producer }).exec()];
                     case 1:
-                        updateMovieById = _a.sent();
-                        updateMovieById.name = req.body.name;
-                        updateMovieById.type = req.body.type;
-                        return [4 /*yield*/, updateMovieById.save()];
+                        producerExist = _a.sent();
+                        if (!(producerExist == null)) return [3 /*break*/, 3];
+                        createProducer = new producerModel_1.producerModel(req.body.producer);
+                        console.log(createProducer);
+                        return [4 /*yield*/, createProducer.save()];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, updateMovieById];
+                        _a.label = 3;
                     case 3:
+                        console.log(producerExist);
+                        return [3 /*break*/, 5];
+                    case 4:
                         err_3 = _a.sent();
                         console.log(err_3);
                         return [2 /*return*/, err_3];
-                    case 4: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
     };
     MovieService.createMovie = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var createMovie, err_4;
+            var countActor, i, actorExist, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        createMovie = new movieModel_1.movieModel(req.body);
-                        return [4 /*yield*/, createMovie.save()];
+                        _a.trys.push([0, 5, , 6]);
+                        countActor = req.body.ActorList.length;
+                        console.log(countActor);
+                        i = 0;
+                        _a.label = 1;
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/, createMovie];
+                        if (!(i < countActor)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, actorModel_1.actorModel.find({ 'name': req.body.ActorList[i] }).exec()];
                     case 2:
+                        actorExist = _a.sent();
+                        console.log(actorExist);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4: return [3 /*break*/, 6];
+                    case 5:
                         err_4 = _a.sent();
                         console.log(err_4);
                         return [2 /*return*/, err_4];
-                    case 3: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

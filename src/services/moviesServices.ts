@@ -27,21 +27,41 @@ export class MovieService{
 
     public static async updateMovieById(req:express.Request, res:express.Response){
         try {
-            
-            //updateMovieById.producedBy = req.body.producedBy;
-            let producerExist = await producerModel.findOne({'name':req.body.producer}).exec();
+            let producerId = null;
+            let producerExist:any = await producerModel.findOne({'name':req.body.producedBy}).exec();
             if(producerExist == null){
-                let createProducer = new producerModel(req.body.producer);
-                console.log(createProducer);
-                await createProducer.save();
+                let createProducer:any = new producerModel();
+                createProducer.name = req.body.producedBy;
+                await createProducer.save(function(err:any,producerDetail:any){
+                    if(err){
+                        return console.error(err);
+                    }else{                        
+                        producerId = producerDetail._id;
+                    }
+                });
+            }else{
+                producerId = producerExist._id;
             }
-            console.log(producerExist);
-            // let updateMovieById:any = await movieModel.findById(req.params.id).exec();
-            // updateMovieById.name = req.body.name;
-            // updateMovieById.yearOfRelease = req.body.yearOfRelease;
-            //updateMovieById.ActorList = req.body.ActorList;
-            //await updateMovieById.save();
-            // return updateMovieById;
+
+            let actorCount = req.body.ActorList.length;
+            for(let i = 0; i < actorCount; i++){
+                let actorExist = await producerModel.findOne({'name':req.body.ActorList[i]}).exec();
+                if(actorExist == null){
+                    let createActor:any = new actorModel();
+                    createActor.name = req.body.ActorList[i];
+                    await createActor.save();
+                }else{
+
+                } 
+            }
+
+            let updateMovieById:any = await movieModel.findById(req.params.id).exec();
+            updateMovieById.name = req.body.name;
+            updateMovieById.yearOfRelease = req.body.yearOfRelease;
+            updateMovieById.ActorList = req.body.ActorList;
+            updateMovieById.producedBy = producerId;
+            await updateMovieById.save();
+            return updateMovieById;
         } catch (err) {
             console.log(err);
             return err;            
@@ -50,12 +70,25 @@ export class MovieService{
     
     public static async createMovie(req:express.Request, res:express.Response){
         try{
+            let producerExist:any = await producerModel.findOne({'name':req.body.producedBy}).exec();
+            if(producerExist == null){
+                let createProducer:any = new producerModel();
+                createProducer.name = req.body.producedBy;
+                await createProducer.save();
+            }else{
+
+            }
             //let createMovie = new movieModel(req.body);
-            let countActor = req.body.ActorList.length;
-            console.log(countActor);
-            for(let i = 0; i < countActor; i++){
-                let actorExist = await actorModel.find({'name':req.body.ActorList[i]}).exec();
-                console.log(actorExist);
+            let actorCount = req.body.ActorList.length;
+            for(let i = 0; i < actorCount; i++){
+                let actorExist = await producerModel.findOne({'name':req.body.ActorList[i]}).exec();
+                if(actorExist == null){
+                    let createActor:any = new actorModel();
+                    createActor.name = req.body.ActorList[i];
+                    await createActor.save();
+                }else{
+
+                } 
             }
             
             

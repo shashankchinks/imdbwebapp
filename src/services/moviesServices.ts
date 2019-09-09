@@ -33,35 +33,30 @@ export class MovieService{
             if(producerExist == null){
                 let createProducer:any = new producerModel();
                 createProducer.name = req.body.producedBy;
-            //    let data = await createProducer.save(function(err:any,producerDetail:any){
-            //         if(err){
-            //             return console.error(err);
-            //         }else{                        
-            //             producerId = producerDetail._id;
-            //         }
-            //     });
                 data = await createProducer.save();
+                producerId = data._id;
             }else{
                 producerId = producerExist._id;
             }
-
+            let actorIdList = Array();
             let actorCount = req.body.ActorList.length;
             for(let i = 0; i < actorCount; i++){
-                let actorExist = await producerModel.findOne({'name':req.body.ActorList[i]}).exec();
+                let actorExist = await actorModel.findOne({'name':req.body.ActorList[i]}).exec();
                 if(actorExist == null){
                     let createActor:any = new actorModel();
                     createActor.name = req.body.ActorList[i];
-                    await createActor.save();
+                    data = await createActor.save();
+                    actorIdList.push(data._id);
                 }else{
-
+                    actorIdList.push(actorExist._id);
                 } 
             }
 
             let updateMovieById:any = await movieModel.findById(req.params.id).exec();
             updateMovieById.name = req.body.name;
             updateMovieById.yearOfRelease = req.body.yearOfRelease;
-            updateMovieById.ActorList = req.body.ActorList;
-            updateMovieById.producedBy = data._id;
+            updateMovieById.producedBy = producerId;
+            updateMovieById.ActorList = actorIdList;
             console.log(updateMovieById);
             await updateMovieById.save();
             return updateMovieById;
@@ -73,32 +68,39 @@ export class MovieService{
     
     public static async createMovie(req:express.Request, res:express.Response){
         try{
+            let data = null;
+            let producerId = null;
             let producerExist:any = await producerModel.findOne({'name':req.body.producedBy}).exec();
             if(producerExist == null){
                 let createProducer:any = new producerModel();
                 createProducer.name = req.body.producedBy;
-                await createProducer.save();
+                data = await createProducer.save();
+                producerId = data._id;
             }else{
-
+                producerId = producerExist._id;
             }
-            //let createMovie = new movieModel(req.body);
+            let actorIdList = Array();
             let actorCount = req.body.ActorList.length;
             for(let i = 0; i < actorCount; i++){
-                let actorExist = await producerModel.findOne({'name':req.body.ActorList[i]}).exec();
+                let actorExist = await actorModel.findOne({'name':req.body.ActorList[i]}).exec();
                 if(actorExist == null){
                     let createActor:any = new actorModel();
                     createActor.name = req.body.ActorList[i];
-                    await createActor.save();
+                    data = await createActor.save();
+                    actorIdList.push(data._id);
                 }else{
-                    
+                    actorIdList.push(actorExist._id);
                 } 
             }
             
-            
-            //await createMovie.save();
-            //return createMovie;
+            let createMovie:any = new movieModel();
+            createMovie.name = req.body.name;
+            createMovie.yearOfRelease = req.body.yearOfRelease;
+            createMovie.producedBy = producerId;
+            createMovie.ActorList = actorIdList;
+            await createMovie.save();
+            return createMovie;
         }catch(err){
-
             console.log(err);
             return err;
         }

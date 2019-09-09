@@ -83,11 +83,11 @@ var MovieService = /** @class */ (function () {
     };
     MovieService.updateMovieById = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, producerId, producerExist, createProducer, actorCount, i, actorExist, createActor, updateMovieById, err_3;
+            var data, producerId, producerExist, createProducer, actorIdList, actorCount, i, actorExist, createActor, updateMovieById, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 11, , 12]);
+                        _a.trys.push([0, 13, , 14]);
                         data = null;
                         producerId = null;
                         return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.producedBy }).exec()];
@@ -98,62 +98,66 @@ var MovieService = /** @class */ (function () {
                         createProducer.name = req.body.producedBy;
                         return [4 /*yield*/, createProducer.save()];
                     case 2:
-                        //    let data = await createProducer.save(function(err:any,producerDetail:any){
-                        //         if(err){
-                        //             return console.error(err);
-                        //         }else{                        
-                        //             producerId = producerDetail._id;
-                        //         }
-                        //     });
                         data = _a.sent();
-                        return [3 /*break*/, 3];
+                        producerId = data._id;
+                        return [3 /*break*/, 4];
                     case 3:
-                        actorCount = req.body.ActorList.length;
-                        i = 0;
+                        producerId = producerExist._id;
                         _a.label = 4;
                     case 4:
-                        if (!(i < actorCount)) return [3 /*break*/, 8];
-                        return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.ActorList[i] }).exec()];
+                        actorIdList = Array();
+                        actorCount = req.body.ActorList.length;
+                        i = 0;
+                        _a.label = 5;
                     case 5:
+                        if (!(i < actorCount)) return [3 /*break*/, 10];
+                        return [4 /*yield*/, actorModel_1.actorModel.findOne({ 'name': req.body.ActorList[i] }).exec()];
+                    case 6:
                         actorExist = _a.sent();
-                        if (!(actorExist == null)) return [3 /*break*/, 7];
+                        if (!(actorExist == null)) return [3 /*break*/, 8];
                         createActor = new actorModel_1.actorModel();
                         createActor.name = req.body.ActorList[i];
                         return [4 /*yield*/, createActor.save()];
-                    case 6:
-                        _a.sent();
-                        return [3 /*break*/, 7];
                     case 7:
-                        i++;
-                        return [3 /*break*/, 4];
-                    case 8: return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).exec()];
+                        data = _a.sent();
+                        actorIdList.push(data._id);
+                        return [3 /*break*/, 9];
+                    case 8:
+                        actorIdList.push(actorExist._id);
+                        _a.label = 9;
                     case 9:
+                        i++;
+                        return [3 /*break*/, 5];
+                    case 10: return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).exec()];
+                    case 11:
                         updateMovieById = _a.sent();
                         updateMovieById.name = req.body.name;
                         updateMovieById.yearOfRelease = req.body.yearOfRelease;
-                        updateMovieById.ActorList = req.body.ActorList;
-                        updateMovieById.producedBy = data._id;
+                        updateMovieById.producedBy = producerId;
+                        updateMovieById.ActorList = actorIdList;
                         console.log(updateMovieById);
                         return [4 /*yield*/, updateMovieById.save()];
-                    case 10:
+                    case 12:
                         _a.sent();
                         return [2 /*return*/, updateMovieById];
-                    case 11:
+                    case 13:
                         err_3 = _a.sent();
                         console.log(err_3);
                         return [2 /*return*/, err_3];
-                    case 12: return [2 /*return*/];
+                    case 14: return [2 /*return*/];
                 }
             });
         });
     };
     MovieService.createMovie = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var producerExist, createProducer, actorCount, i, actorExist, createActor, err_4;
+            var data, producerId, producerExist, createProducer, actorIdList, actorCount, i, actorExist, createActor, createMovie, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 9, , 10]);
+                        _a.trys.push([0, 12, , 13]);
+                        data = null;
+                        producerId = null;
                         return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.producedBy }).exec()];
                     case 1:
                         producerExist = _a.sent();
@@ -162,33 +166,51 @@ var MovieService = /** @class */ (function () {
                         createProducer.name = req.body.producedBy;
                         return [4 /*yield*/, createProducer.save()];
                     case 2:
-                        _a.sent();
-                        return [3 /*break*/, 3];
+                        data = _a.sent();
+                        producerId = data._id;
+                        return [3 /*break*/, 4];
                     case 3:
-                        actorCount = req.body.ActorList.length;
-                        i = 0;
+                        producerId = producerExist._id;
                         _a.label = 4;
                     case 4:
-                        if (!(i < actorCount)) return [3 /*break*/, 8];
-                        return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.ActorList[i] }).exec()];
+                        actorIdList = Array();
+                        actorCount = req.body.ActorList.length;
+                        i = 0;
+                        _a.label = 5;
                     case 5:
+                        if (!(i < actorCount)) return [3 /*break*/, 10];
+                        return [4 /*yield*/, actorModel_1.actorModel.findOne({ 'name': req.body.ActorList[i] }).exec()];
+                    case 6:
                         actorExist = _a.sent();
-                        if (!(actorExist == null)) return [3 /*break*/, 7];
+                        if (!(actorExist == null)) return [3 /*break*/, 8];
                         createActor = new actorModel_1.actorModel();
                         createActor.name = req.body.ActorList[i];
                         return [4 /*yield*/, createActor.save()];
-                    case 6:
-                        _a.sent();
-                        return [3 /*break*/, 7];
                     case 7:
-                        i++;
-                        return [3 /*break*/, 4];
-                    case 8: return [3 /*break*/, 10];
+                        data = _a.sent();
+                        actorIdList.push(data._id);
+                        return [3 /*break*/, 9];
+                    case 8:
+                        actorIdList.push(actorExist._id);
+                        _a.label = 9;
                     case 9:
+                        i++;
+                        return [3 /*break*/, 5];
+                    case 10:
+                        createMovie = new movieModel_1.movieModel();
+                        createMovie.name = req.body.name;
+                        createMovie.yearOfRelease = req.body.yearOfRelease;
+                        createMovie.producedBy = producerId;
+                        createMovie.ActorList = actorIdList;
+                        return [4 /*yield*/, createMovie.save()];
+                    case 11:
+                        _a.sent();
+                        return [2 /*return*/, createMovie];
+                    case 12:
                         err_4 = _a.sent();
                         console.log(err_4);
                         return [2 /*return*/, err_4];
-                    case 10: return [2 /*return*/];
+                    case 13: return [2 /*return*/];
                 }
             });
         });

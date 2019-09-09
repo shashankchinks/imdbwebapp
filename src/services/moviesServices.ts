@@ -27,18 +27,20 @@ export class MovieService{
 
     public static async updateMovieById(req:express.Request, res:express.Response){
         try {
+            let data = null;
             let producerId = null;
             let producerExist:any = await producerModel.findOne({'name':req.body.producedBy}).exec();
             if(producerExist == null){
                 let createProducer:any = new producerModel();
                 createProducer.name = req.body.producedBy;
-                await createProducer.save(function(err:any,producerDetail:any){
-                    if(err){
-                        return console.error(err);
-                    }else{                        
-                        producerId = producerDetail._id;
-                    }
-                });
+            //    let data = await createProducer.save(function(err:any,producerDetail:any){
+            //         if(err){
+            //             return console.error(err);
+            //         }else{                        
+            //             producerId = producerDetail._id;
+            //         }
+            //     });
+                data = await createProducer.save();
             }else{
                 producerId = producerExist._id;
             }
@@ -59,7 +61,8 @@ export class MovieService{
             updateMovieById.name = req.body.name;
             updateMovieById.yearOfRelease = req.body.yearOfRelease;
             updateMovieById.ActorList = req.body.ActorList;
-            updateMovieById.producedBy = producerId;
+            updateMovieById.producedBy = data._id;
+            console.log(updateMovieById);
             await updateMovieById.save();
             return updateMovieById;
         } catch (err) {
@@ -87,7 +90,7 @@ export class MovieService{
                     createActor.name = req.body.ActorList[i];
                     await createActor.save();
                 }else{
-
+                    
                 } 
             }
             
@@ -95,6 +98,7 @@ export class MovieService{
             //await createMovie.save();
             //return createMovie;
         }catch(err){
+
             console.log(err);
             return err;
         }

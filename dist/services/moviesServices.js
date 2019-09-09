@@ -83,60 +83,60 @@ var MovieService = /** @class */ (function () {
     };
     MovieService.updateMovieById = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var producerId_1, producerExist, createProducer, actorCount, i, actorExist, createActor, updateMovieById, err_3;
+            var data, producerId, producerExist, createProducer, actorCount, i, actorExist, createActor, updateMovieById, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 11, , 12]);
-                        producerId_1 = null;
+                        data = null;
+                        producerId = null;
                         return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.producedBy }).exec()];
                     case 1:
                         producerExist = _a.sent();
                         if (!(producerExist == null)) return [3 /*break*/, 3];
                         createProducer = new producerModel_1.producerModel();
                         createProducer.name = req.body.producedBy;
-                        return [4 /*yield*/, createProducer.save(function (err, producerDetail) {
-                                if (err) {
-                                    return console.error(err);
-                                }
-                                else {
-                                    producerId_1 = producerDetail._id;
-                                    console.log(producerId_1 + '<br/>');
-                                }
-                            })];
+                        return [4 /*yield*/, createProducer.save()];
                     case 2:
-                        _a.sent();
-                        return [3 /*break*/, 4];
+                        //    let data = await createProducer.save(function(err:any,producerDetail:any){
+                        //         if(err){
+                        //             return console.error(err);
+                        //         }else{                        
+                        //             producerId = producerDetail._id;
+                        //         }
+                        //     });
+                        data = _a.sent();
+                        return [3 /*break*/, 3];
                     case 3:
-                        producerId_1 = producerExist._id;
-                        _a.label = 4;
-                    case 4:
                         actorCount = req.body.ActorList.length;
                         i = 0;
-                        _a.label = 5;
-                    case 5:
-                        if (!(i < actorCount)) return [3 /*break*/, 9];
+                        _a.label = 4;
+                    case 4:
+                        if (!(i < actorCount)) return [3 /*break*/, 8];
                         return [4 /*yield*/, producerModel_1.producerModel.findOne({ 'name': req.body.ActorList[i] }).exec()];
-                    case 6:
+                    case 5:
                         actorExist = _a.sent();
-                        if (!(actorExist == null)) return [3 /*break*/, 8];
+                        if (!(actorExist == null)) return [3 /*break*/, 7];
                         createActor = new actorModel_1.actorModel();
                         createActor.name = req.body.ActorList[i];
                         return [4 /*yield*/, createActor.save()];
-                    case 7:
+                    case 6:
                         _a.sent();
-                        return [3 /*break*/, 8];
-                    case 8:
+                        return [3 /*break*/, 7];
+                    case 7:
                         i++;
-                        return [3 /*break*/, 5];
-                    case 9: return [4 /*yield*/, movieModel_1.movieModel.findByIdAndUpdate(req.params.id, { $set: {
-                                name: req.body.name,
-                                yearOfRelease: req.body.yearOfRelease,
-                                producedBy: producerId_1,
-                                ActorList: req.body.ActorList
-                            } }, { new: true }).exec()];
-                    case 10:
+                        return [3 /*break*/, 4];
+                    case 8: return [4 /*yield*/, movieModel_1.movieModel.findById(req.params.id).exec()];
+                    case 9:
                         updateMovieById = _a.sent();
+                        updateMovieById.name = req.body.name;
+                        updateMovieById.yearOfRelease = req.body.yearOfRelease;
+                        updateMovieById.ActorList = req.body.ActorList;
+                        updateMovieById.producedBy = data._id;
+                        console.log(updateMovieById);
+                        return [4 /*yield*/, updateMovieById.save()];
+                    case 10:
+                        _a.sent();
                         return [2 /*return*/, updateMovieById];
                     case 11:
                         err_3 = _a.sent();
